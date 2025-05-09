@@ -3,7 +3,11 @@ import type { PropsWithChildren } from "react";
 
 function Theme({ children }: PropsWithChildren) {
   const config: ThemeConfig = {
-    // tokens: {},
+    token: {
+      fontFamily: `Pretendard-Regular, -apple-system, BlinkMacSystemFont, 
+'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 
+'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'`,
+    },
   };
   return <ConfigProvider theme={config}>{children}</ConfigProvider>;
 }
