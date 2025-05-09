@@ -1,54 +1,77 @@
-# React + TypeScript + Vite
+# Re:Catch Test
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 프로젝트 개요
 
-Currently, two official plugins are available:
+- Front-end Engineer 포지션의 입사 과제 전형 프로젝트
+- 회원 목록을 관리할 수 있는 테이블 만들기
+- AntD 사용하여 회원 엔티티의 CRUD 구현
+- env variable 에 따라 레코드를 in-memory 또는 local-storage 에 저장
+- [과제안내링크](https://businesscanvas.notion.site/1158a6dbf83980488d96cbfcd9bc3426)
+- [디자인 피그마 링크](https://www.figma.com/design/dxmIaXbozcjrztnYsOOb8D/개발-과제?node-id=1-38232&t=vJhru0a6IFQ4sdoz-0)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 프로젝트 구조
 
-## Expanding the ESLint configuration
+#### FSD (Feature-Sliced Design) 구조 사용 ([참고링크](https://wonderfulwonder.tistory.com/110))
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 레이어, 슬라이스, 세그먼트 구조를 통해 구조화하여 소스의 파편화를 방지
+- `app` 으로부터 `shared` 방향으로만 참조하고 역방향으로는 참조하지 않도록 하여 순환참조를 방지
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```text
+app/                            // [루트 단위]
+  providers/                    // 콘텍스트 프로바이더 (zustand, react-router, tanstack-query 등)
+  ui/                           // App UI, 스타일
+    main.tsx
+    App.tsx
+
+pages/                          // [페이지 단위]
+  user-list.tsx                 // 회원 목록 페이지(단일 파일 또는 폴더로 구성)
+
+widgets/                        // [위젯 단위] (기능 및 엔티티 단위의 조합)
+  [some-widget].tsx             // entity, feature 의 조합(단일 파일 또는 폴더로 구성)
+
+features/                       // [기능 단위]
+  [some-feature]/      // 양식 가져오기 기능
+    api/                        // API
+    model/                      // 훅(엔티티의 모델 사용하여 비지니스 로직 구현)
+    ui/                         // UI
+
+entities/                       // [엔티티 단위]
+  user/                         // 회원 엔티티
+    model/                      // 엔티티 모델, Zustand 스토어 등
+    util/                       // 양식 유효성 검사 도구 등
+
+shared/                         // [공통]
+  assets/                       // 리소스 파일 (png, svg)
+  config/                       // 공통 설정 (app config, routes 등)
+  hooks/                        // 공통 훅
+  ui/                           // 공통 UI 콤포넌트 (단일 파일 또는 폴더로 구성)
+  util/                         // 공통 유틸
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 사용된 라이브러리 목록
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- [Vite](https://ko.vite.dev/guide/)
+- [React 19](https://react.dev/blog/2023/03/16/introducing-react-dev)
+- [React-router](https://reactrouter.com/6.28.0/start/overview)
+- [Zustand](https://zustand.docs.pmnd.rs)
+- [Tanstack-query](https://tanstack.com/query/latest)
+- [Lodash](https://lodash.com)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## 시작하기
+
+```sh
+npm install
+npm run dev
+```
+
+## 빌드하기
+
+```sh
+npm run build
+```
+
+## 미리보기
+
+```sh
+npm run preview
 ```
