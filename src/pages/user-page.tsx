@@ -13,7 +13,11 @@ function UserPage() {
 
   return (
     <>
-      <Space direction="vertical" style={{ width: "100%" }}>
+      <Space
+        direction="vertical"
+        size="middle"
+        style={{ display: "flex", padding: "1rem" }}
+      >
         <Space wrap>
           <Input placeholder="이름, 주소, 메모 검색" />
           <Select placeholder="직업 선택" allowClear options={jobOptions} />
