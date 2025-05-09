@@ -14,7 +14,23 @@ export const userApiLocalStorage: BaseApi<User> & {
   },
   async findMany(params: QueryParams) {
     const { data: users } = await this.findAll();
-    return { total: 0, data: users };
+
+    const data = params.filters
+      ? users.filter((user) => {
+          const matchesColumnFilters = Object.entries(params.filters!).every(
+            ([field, values]) => {
+              if (!values || values.length === 0) return true;
+              const userValue = String(user[field as keyof User]);
+              console.log("filter", { userValue, values });
+              return values.includes(userValue);
+            },
+          );
+
+          return matchesColumnFilters;
+        })
+      : users;
+
+    return { total: 0, data };
   },
   async findOne(id) {
     const { data: users } = await this.findAll();
@@ -50,7 +66,7 @@ function getDefaultUserList(): User[] {
       id: uuidv4(),
       name: "John Doe",
       address: "서울 강남구",
-      memo: " 외국인",
+      memo: "외국인",
       joinedAt: "2024-10-02",
       job: "개발자",
       agreedToEmail: true,
