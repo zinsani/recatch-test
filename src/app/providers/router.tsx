@@ -1,4 +1,4 @@
-import UserListPage from "@/pages/user-list";
+import UserPage from "@/pages/user-page";
 import type { PropsWithChildren } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -7,7 +7,7 @@ function RouterProvider(children: PropsWithChildren) {
     <BrowserRouter>
       {/* TODO: common Layout wrapping */}
       <Routes>
-        <Route path="/" element={<UserListPage />} />
+        <Route path="/" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
   );

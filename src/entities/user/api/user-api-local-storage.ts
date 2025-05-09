@@ -1,5 +1,5 @@
-import type { BaseApi } from "@/shared/ui/api";
-import type { User } from "..";
+import type { BaseApi } from "@/shared/api";
+import type { User, QueryParams } from "..";
 import { v4 as uuidv4 } from "uuid";
 import { NotFoundError } from "@/shared/ui/errors";
 
@@ -12,7 +12,7 @@ export const userApiLocalStorage: BaseApi<User> & {
     const data: User[] = users ? JSON.parse(users) : getDefaultUserList();
     return { total: data.length, data };
   },
-  async findMany(params) {
+  async findMany(params: QueryParams) {
     const { data: users } = await this.findAll();
     return { total: 0, data: users };
   },
