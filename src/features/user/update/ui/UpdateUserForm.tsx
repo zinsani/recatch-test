@@ -1,7 +1,8 @@
-import { Button, Form, Input, DatePicker, Select, Checkbox } from "antd";
+import { Button, Form, Input, DatePicker, Select, Checkbox, Space } from "antd";
 import { type User, jobOptions } from "@/entities/user";
 import dayjs, { type Dayjs } from "dayjs";
 import { requiredMark } from "@/shared/ui";
+import { useFormValidation } from "@/shared/lib";
 
 interface Props {
   user: User;
@@ -10,7 +11,9 @@ interface Props {
 }
 
 function UpdateUserForm({ user, onClose, onSubmit }: Props) {
-  const [form] = Form.useForm();
+  const { form, isFormValid, handleFieldsChange } = useFormValidation({
+    isCreating: false,
+  });
   const handleFinish = async (
     values: Omit<Partial<User>, "joinedAt"> & { joinedAt: Dayjs },
   ) => {
@@ -21,16 +24,17 @@ function UpdateUserForm({ user, onClose, onSubmit }: Props) {
     };
     onSubmit(updated);
   };
-
-  const invalid =
-    !form.isFieldsTouched(true) ||
-    form.getFieldsError().filter(({ errors }) => errors.length).length > 0;
+  const handleClose = () => {
+    form.resetFields();
+    onClose();
+  };
 
   return (
     <Form
       layout="vertical"
       form={form}
       onFinish={handleFinish}
+      onFieldsChange={handleFieldsChange}
       initialValues={{
         ...user,
         joinedAt: dayjs(user.joinedAt),
@@ -67,9 +71,27 @@ function UpdateUserForm({ user, onClose, onSubmit }: Props) {
       <Form.Item name="agreedToEmail" valuePropName="checked">
         <Checkbox>이메일 수신 동의</Checkbox>
       </Form.Item>
-      <Button type="primary" htmlType="submit" disabled={invalid}>
-        수정
-      </Button>
+      <Space
+        size="small"
+        style={{ display: "flex", justifyContent: "flex-end" }}
+      >
+        <Button
+          type="default"
+          htmlType="button"
+          style={{ width: "57px" }}
+          onClick={handleClose}
+        >
+          취소
+        </Button>
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={{ width: "57px" }}
+          disabled={!isFormValid}
+        >
+          수정
+        </Button>
+      </Space>
     </Form>
   );
 }
