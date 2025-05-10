@@ -37,6 +37,7 @@ export const useUserTable = ({
     {
       title: "이름",
       dataIndex: "name",
+      width: 120,
       ...filterProps,
       filters:
         filteredUsers.map((e) => ({ text: e.name, value: e.name })) ?? [],
@@ -44,6 +45,7 @@ export const useUserTable = ({
     {
       title: "주소",
       dataIndex: "address",
+      width: 249,
       ...filterProps,
       filters:
         filteredUsers
@@ -56,6 +58,7 @@ export const useUserTable = ({
     {
       title: "메모",
       dataIndex: "memo",
+      width: 249,
       ...filterProps,
       filters:
         filteredUsers
@@ -68,6 +71,7 @@ export const useUserTable = ({
     {
       title: "가입일",
       dataIndex: "joinedAt",
+      width: 200,
       ...filterProps,
       filters:
         filteredUsers.map((e) => ({
@@ -78,6 +82,7 @@ export const useUserTable = ({
     {
       title: "직업",
       dataIndex: "job",
+      width: 249,
       ...filterProps,
       filters: jobOptions
         .map(({ label, value }) => ({
@@ -91,6 +96,7 @@ export const useUserTable = ({
     {
       title: "이메일 수신 동의",
       dataIndex: "agreedToEmail",
+      width: 150,
       render: checkboxRenderer,
       ...filterProps,
       filters: [
@@ -103,7 +109,7 @@ export const useUserTable = ({
     {
       title: "",
       key: "actions",
-      width: "48px",
+      width: 48,
       render: actionRenderer,
     },
   ];
