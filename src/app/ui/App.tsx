@@ -1,16 +1,13 @@
 import "./App.css";
-import RouterProvider from "../providers/router";
-import QueryProvider from "../providers/tanstack-query";
-import Theme from "../providers/theme";
-import { Layout } from "@/shared/ui";
+import RouterProvider from "../providers/RouteProvider";
+import QueryProvider from "../providers/QueryProvider";
+import Theme from "../providers/ConfigProvider";
 
 function App() {
   return (
     <QueryProvider>
       <Theme>
-        <Layout>
-          <RouterProvider />
-        </Layout>
+        <RouterProvider />
       </Theme>
     </QueryProvider>
   );

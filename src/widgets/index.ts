@@ -1,1 +1,1 @@
-export { default as UserTable } from "./user-table-widget";
+export { default as UserTable } from "./UserTableWidget";
