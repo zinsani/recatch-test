@@ -1,8 +1,9 @@
-import { useState, useMemo, type ReactNode } from "react";
+import { useState, useMemo, type ReactNode, useEffect } from "react";
 import type { User } from "@/entities/user";
 import { useUserQuery } from "@/features/user/find";
 import { jobOptions } from "@/entities/user";
 import type { TableProps } from "antd";
+import { getFilteredItems } from "@/shared/lib";
 
 type ColumnFilters = Record<string, string[]>;
 
@@ -19,7 +20,9 @@ export const useUserTable = ({
   const { data, isLoading } = useUserQuery({ filters: columnFilters });
 
   const filteredUsers = useMemo(() => {
-    return data?.data || [];
+    return data?.data
+      ? getFilteredItems(data.data, { filters: columnFilters })
+      : [];
   }, [data?.data, columnFilters]);
 
   const total = useMemo(() => data?.total ?? 0, [data?.total]);

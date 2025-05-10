@@ -2,6 +2,7 @@ import type { BaseApi } from "@/shared/api";
 import type { User, QueryParams } from "..";
 import { v4 as uuidv4 } from "uuid";
 import { NotFoundError } from "@/shared/ui/errors";
+import { getFilteredItems } from "@/shared/lib";
 
 const STORAGE_KEY = "users";
 export const userApiLocalStorage: BaseApi<User> & {
@@ -15,20 +16,7 @@ export const userApiLocalStorage: BaseApi<User> & {
   async findMany(params: QueryParams) {
     const { data: users } = await this.findAll();
 
-    const data = params.filters
-      ? users.filter((user) => {
-          const matchesColumnFilters = Object.entries(params.filters!).every(
-            ([field, values]) => {
-              if (!values || values.length === 0) return true;
-              const userValue = String(user[field as keyof User]);
-              console.log("filter", { userValue, values });
-              return values.includes(userValue);
-            },
-          );
-
-          return matchesColumnFilters;
-        })
-      : users;
+    const data = getFilteredItems(users, params);
 
     return { total: 0, data };
   },

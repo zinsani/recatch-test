@@ -22,6 +22,7 @@ export type BaseQueryParams<T> = {
   page?: number;
   sortField?: keyof T;
   sortOrder?: SortOrder;
+  filters?: Record<string, string[]>;
 };
 export interface BaseApi<T extends { id: T["id"] }> {
   create(data: Omit<T, "id">): Promise<CreateResponse<T>>;
