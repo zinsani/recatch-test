@@ -1,11 +1,21 @@
-import { useUserStore, type User } from "@/entities/user";
+import { type User } from "@/entities/user";
 import { useUserTable } from "@/features/user/find";
+import { useRemoveUser } from "@/features/user/remove";
+import { useUpdateUser } from "@/features/user/update";
 import { MoreOutlined, FilterFilled } from "@ant-design/icons";
-import { Dropdown, Button, Checkbox, Table } from "antd";
+import { Dropdown, Button, Checkbox, Table, Popconfirm } from "antd";
 import { useCallback } from "react";
 
 function UserTable() {
-  const setEditingUser = useUserStore((s) => s.setEditingUser);
+  const { setEditingUser } = useUpdateUser();
+  const { remove } = useRemoveUser();
+  const handleRemove = async (id: User["id"]) => {
+    try {
+      await remove(id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const actionRenderer = useCallback(
     (user: User) => (
@@ -20,7 +30,14 @@ function UserTable() {
             { type: "divider" },
             {
               key: "delete",
-              label: <a>삭제</a>,
+              label: (
+                <Popconfirm
+                  title="정말 삭제하시겠습니까?"
+                  onConfirm={() => handleRemove(user.id)}
+                >
+                  <a>삭제</a>
+                </Popconfirm>
+              ),
             },
           ],
         }}
