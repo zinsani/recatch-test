@@ -6,11 +6,7 @@ import { UserTable } from "@/widgets";
 function UserPage() {
   return (
     <>
-      <Space
-        direction="vertical"
-        size="middle"
-        style={{ display: "flex", padding: "1rem" }}
-      >
+      <Space direction="vertical" size="middle" style={{ display: "flex" }}>
         <Space
           style={{
             display: "flex",
