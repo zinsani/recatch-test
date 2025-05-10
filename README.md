@@ -24,38 +24,44 @@ app/                            // [루트 단위]
     App.tsx
 
 pages/                          // [페이지 단위]
-  user-list.tsx                 // 회원 목록 페이지(단일 파일 또는 폴더로 구성)
+  UserPage.tsx                 // 회원 목록 페이지(단일 파일 또는 폴더로 구성)
 
 widgets/                        // [위젯 단위] (기능 및 엔티티 단위의 조합)
-  [some-widget].tsx             // entity, feature 의 조합(단일 파일 또는 폴더로 구성)
+  [SomeWidget].tsx             // entity, feature 의 조합(단일 파일 또는 폴더로 구성)
 
 features/                       // [기능 단위]
-  [some-feature]/      // 양식 가져오기 기능
+  [some-feature]/
     api/                        // API
     model/                      // 훅(엔티티의 모델 사용하여 비지니스 로직 구현)
     ui/                         // UI
 
 entities/                       // [엔티티 단위]
   user/                         // 회원 엔티티
-    model/                      // 엔티티 모델, Zustand 스토어 등
-    util/                       // 양식 유효성 검사 도구 등
+    api/                        // 회원 Api 서비스
+    model/                      // 회원 엔티티 모델, Zustand 스토어
+    ui/                         // 회원 엔티티 공통 UI
 
 shared/                         // [공통]
+  api/                          // baseApi 인터페이스
   assets/                       // 리소스 파일 (png, svg)
   config/                       // 공통 설정 (app config, routes 등)
-  hooks/                        // 공통 훅
-  ui/                           // 공통 UI 콤포넌트 (단일 파일 또는 폴더로 구성)
-  util/                         // 공통 유틸
+  lib/                          // 공통 라이브러리
+    hooks/                      // 공통 훅
+    utils                       // 공통 유틸
+  ui/                           // 공통 UI 콤포넌트 (레이아웃 등, 단일 파일 또는 폴더로 구성)
 ```
 
 ### 사용된 라이브러리 목록
 
 - [Vite](https://ko.vite.dev/guide/)
-- [React 19](https://react.dev/blog/2023/03/16/introducing-react-dev)
+- [React 18.3.1](https://18.react.dev)
 - [React-router](https://reactrouter.com/6.28.0/start/overview)
+- [Ant Design](https://ant.design)
+- [Ant Design Icons](https://ant.design/components/icon)
 - [Zustand](https://zustand.docs.pmnd.rs)
 - [Tanstack-query](https://tanstack.com/query/latest)
-- [Lodash](https://lodash.com)
+- [Dayjs](https://day.js.org)
+- [uuid](https://www.npmjs.com/package/uuid)
 
 ## 시작하기
 
