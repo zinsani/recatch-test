@@ -47,6 +47,7 @@ function UserTable() {
       rowKey="id"
       columns={columns}
       onChange={onTableChange}
+      pagination={false}
     />
   );
 }
