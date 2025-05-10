@@ -1,34 +1,29 @@
 import { Button, Form, Input, DatePicker, Select, Checkbox, Space } from "antd";
-import { type User, jobOptions } from "@/entities/user";
-import dayjs, { type Dayjs } from "dayjs";
-import { requiredMark } from "@/shared/ui";
+import { jobOptions, type User } from "@/entities/user";
 import { useFormValidation } from "@/shared/lib";
+import { useCreateUser } from "../model/useCreateUser";
 import { useEffect } from "react";
-import { useUpdateUser } from "../model/useUpdateUser";
 
 interface Props {
-  user: User;
   onClose: () => void;
 }
 
-function UpdateUserForm({ user, onClose }: Props) {
-  const { form, isFormValid, handleFieldsChange } = useFormValidation({
-    isCreating: false,
+function CreateUserForm({ onClose }: Props) {
+  const { form, isFormValid, handleFieldsChange } = useFormValidation<User>({
+    isCreating: true,
     requiredFields: ["name", "joinedAt"],
   });
 
-  const { update } = useUpdateUser();
+  const { isModalOpen, create } = useCreateUser();
 
-  const handleFinish = async (
-    values: Omit<Partial<User>, "joinedAt"> & { joinedAt: Dayjs },
-  ) => {
+  const handleFinish = async (values: any) => {
     try {
-      const updated: User = {
-        ...user,
+      const user: Omit<User, "id"> = {
         ...values,
         joinedAt: values.joinedAt.format("YYYY-MM-DD"),
       };
-      await update(updated);
+      await create(user);
+      form.resetFields();
       onClose();
     } catch (error) {
       console.error(error);
@@ -36,16 +31,10 @@ function UpdateUserForm({ user, onClose }: Props) {
   };
 
   useEffect(() => {
-    if (!user) {
+    if (!isModalOpen) {
       form.resetFields();
     }
-    return () => form.resetFields();
-  }, [form, user]);
-
-  const handleClose = () => {
-    form.resetFields();
-    onClose();
-  };
+  }, [form, isModalOpen]);
 
   return (
     <Form
@@ -53,11 +42,6 @@ function UpdateUserForm({ user, onClose }: Props) {
       form={form}
       onFinish={handleFinish}
       onFieldsChange={handleFieldsChange}
-      initialValues={{
-        ...user,
-        joinedAt: dayjs(user.joinedAt),
-      }}
-      requiredMark={requiredMark}
     >
       <Form.Item
         name="name"
@@ -97,7 +81,7 @@ function UpdateUserForm({ user, onClose }: Props) {
           type="default"
           htmlType="button"
           style={{ width: "57px" }}
-          onClick={handleClose}
+          onClick={onClose}
         >
           취소
         </Button>
@@ -107,10 +91,10 @@ function UpdateUserForm({ user, onClose }: Props) {
           style={{ width: "57px" }}
           disabled={!isFormValid}
         >
-          수정
+          추가
         </Button>
       </Space>
     </Form>
   );
 }
-export default UpdateUserForm;
+export default CreateUserForm;

@@ -10,7 +10,6 @@ export const getFilteredItems = <T, Q extends BaseQueryParams<T>>(
           ([field, values]) => {
             if (!values || values.length === 0) return true;
             const userValue = String(item[field as keyof T]);
-            console.log("filter", { userValue, values });
             return values.includes(userValue);
           },
         );

@@ -1,7 +1,13 @@
 import { Form } from "antd";
 import { useState } from "react";
 
-export const useFormValidation = ({ isCreating }: { isCreating: boolean }) => {
+export const useFormValidation = <T>({
+  isCreating,
+  requiredFields = [],
+}: {
+  isCreating: boolean;
+  requiredFields: Array<keyof T>;
+}) => {
   const [form] = Form.useForm();
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -9,7 +15,10 @@ export const useFormValidation = ({ isCreating }: { isCreating: boolean }) => {
     const hasErrors = form
       .getFieldsError()
       .some((field) => field.errors.length > 0);
-    const allTouched = isCreating ? form.isFieldsTouched(true) : true;
+    const allTouched = isCreating
+      ? form.isFieldsTouched(requiredFields, true)
+      : true;
+
     setIsFormValid(allTouched && !hasErrors);
   };
 
