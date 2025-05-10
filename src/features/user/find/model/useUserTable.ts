@@ -79,10 +79,14 @@ export const useUserTable = ({
       title: "직업",
       dataIndex: "job",
       ...filterProps,
-      filters: jobOptions.map(({ label, value }) => ({
-        text: label,
-        value,
-      })),
+      filters: jobOptions
+        .map(({ label, value }) => ({
+          text: label,
+          value,
+        }))
+        .filter((e) =>
+          filteredUsers.some((x) => x.job?.toString() === e.value),
+        ),
     },
     {
       title: "이메일 수신 동의",
@@ -92,7 +96,9 @@ export const useUserTable = ({
       filters: [
         { text: "동의", value: "true" },
         { text: "비동의", value: "false" },
-      ],
+      ].filter((e) =>
+        filteredUsers.some((x) => x.agreedToEmail?.toString() === e.value),
+      ),
     },
     {
       title: "",
