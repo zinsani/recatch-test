@@ -1,14 +1,9 @@
-import { Space, Table, Button, Checkbox } from "antd";
-import { FilterFilled, MoreOutlined } from "@ant-design/icons";
-import { useUserTable } from "@/features/user/find/useUserTable";
+import { Space, Button, Typography } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import UpdateUserModal from "@/features/user/update/ui/UpdateUserModal";
+import { UserTable } from "@/widgets";
 
 function UserPage() {
-  const { columns, filteredUsers, onTableChange } = useUserTable({
-    filterIcon: <FilterFilled />,
-    actionRenderer: (_, user) => <Button icon={<MoreOutlined />} />,
-    checkboxRenderer: (value) => <Checkbox checked={value} />,
-  });
-
   return (
     <>
       <Space
@@ -16,13 +11,25 @@ function UserPage() {
         size="middle"
         style={{ display: "flex", padding: "1rem" }}
       >
-        <Table
-          dataSource={filteredUsers}
-          rowKey="id"
-          columns={columns}
-          onChange={onTableChange}
-        />
+        <Space
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingLeft: "14px",
+            paddingRight: "14px",
+            height: "48px",
+          }}
+        >
+          <Typography.Title level={5}>회원 목록</Typography.Title>
+          <Button type="primary">
+            <PlusOutlined />
+            추가
+          </Button>
+        </Space>
+        <UserTable />
       </Space>
+      <UpdateUserModal />
     </>
   );
 }

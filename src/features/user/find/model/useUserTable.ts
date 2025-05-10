@@ -1,7 +1,7 @@
 import { useState, useMemo, type ReactNode } from "react";
-import type { Job, User } from "@/entities/user";
+import type { User } from "@/entities/user";
 import { useUserQuery } from "@/features/user/find";
-import { jobOptions } from "@/entities/user/model/user-column-options";
+import { jobOptions } from "@/entities/user";
 import type { TableProps } from "antd";
 
 type ColumnFilters = Record<string, string[]>;
@@ -94,6 +94,7 @@ export const useUserTable = ({
     {
       title: "",
       key: "actions",
+      width: "48px",
       render: actionRenderer,
     },
   ];
