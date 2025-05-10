@@ -1,4 +1,4 @@
-import { useState, useMemo, type ReactNode, useEffect } from "react";
+import { useState, useMemo, type ReactNode } from "react";
 import type { User } from "@/entities/user";
 import { useUserQuery } from "@/features/user/find";
 import { jobOptions } from "@/entities/user";
@@ -100,8 +100,8 @@ export const useUserTable = ({
       render: checkboxRenderer,
       ...filterProps,
       filters: [
-        { text: "동의", value: "true" },
-        { text: "비동의", value: "false" },
+        { text: "선택됨", value: "true" },
+        { text: "선택 안함", value: "false" },
       ].filter((e) =>
         filteredUsers.some((x) => x.agreedToEmail?.toString() === e.value),
       ),
